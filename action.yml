@@ -1,0 +1,23 @@
+name: pandoc action
+description: Converting documents with pandoc.
+author: Fei Qi
+branding:
+  icon: 'printer'
+  color: 'blue'
+inputs:
+  source_files:
+    description: The source file to be converted.
+    required: true
+  format:
+    description: The target file format.
+    required: true
+  options:
+    description: Options controlling the conversion.
+    required: true
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.source_files }}
+    - ${{ inputs.format }}
+    - ${{ inputs.options }}
