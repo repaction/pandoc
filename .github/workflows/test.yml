@@ -1,0 +1,18 @@
+name: Test pandoc Action
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Convert document
+        uses: fredqi/pandoc-action@master
+        with:
+          source_files: |
+            README.md
+          format: beamer
+          options: -s --toc
+      - name: Check output files.
+        run: |
+          file README.tex
