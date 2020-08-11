@@ -16,6 +16,19 @@ fi
 
 PANDOC_EXEC=$(which pandoc)
 
+if [[ "$format" == "beamer" || "$format" == "latex" ]]; then
+    ext="tex"
+fi
+
+if [[ "$format" == "html4" || "$format" == "html5" || "$format" == "revealjs" ]]; then
+    ext="html"
+fi
+
+if [[ "$format" == "docx" || "$format" == "pptx" || "$format" == "html" ]]; then
+    ext="$format"
+fi
+
+
 while IFS= read -r f; do
   if [[ -z "$f" ]]; then
     continue
@@ -27,9 +40,7 @@ while IFS= read -r f; do
     echo "File '$f' cannot be found."
   fi
 
-  if [[ "$format" == "beamer" || "$format" == "tex" ]]; then
-      target=${f/.*/.tex}
-  fi
+  target=${f/.*/.${ext}}
 
   $PANDOC_EXEC -t $format ${options} -o ${target} $f
 done <<< "$source_files"
