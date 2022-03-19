@@ -34,7 +34,7 @@ while IFS= read -r f; do
     continue
   fi
 
-  echo "Compiling $f..."
+  echo "::group::Compiling $f..."
 
   if [[ ! -f "$f" ]]; then
     echo "File '$f' cannot be found."
@@ -43,4 +43,7 @@ while IFS= read -r f; do
   target=${f/.*/.${ext}}
 
   $PANDOC_EXEC -t $format ${options} -o ${target} $f
+
+  echo "::endgroup::"
+  
 done <<< "$source_files"
